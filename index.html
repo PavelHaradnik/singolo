@@ -11,36 +11,62 @@
     </head>
 
     <body>
+            <!--Singolo 1-->
         <div class="container-singolo1">
-            <header class="head-singolo1"> 
+            <!-- Menu -->
+            <header class="head-singolo1"> <arcticle id=home>  </arcticle>
+
                 <div class="head-cont-singolo1"><h1 class="head-logo-singolo1"> Singolo <span>*</span> </h1>
-                <nav class="nav-singolo1">
+                <nav class="head-menu">
                     <ul>
 
-                        <li> <a class="nav-head-first" href="#">Home</a></li>
+                        <li class="nav-head nav-active"> <a href="#home">Home</a></li>
 
-                        <li> <a class="nav-head" href="#">Services</a></li>
+                        <li class="nav-head"> <a href="#services">Services</a></li>
 
-                        <li> <a class="nav-head" href="#">Portfolio</a></li>
+                        <li class="nav-head"> <a href="#portfolio">Portfolio</a></li>
 
-                        <li> <a class="nav-head" href="#">About</a></li>
+                        <li class="nav-head"> <a href="#about">About</a></li>
 
-                        <li> <a class="nav-head" href="#">Contact</a></li>
+                        <li class="nav-head"> <a href="#contact">Contact</a></li>
 
                     </ul>
                 </nav>
                 </div>
             </header>
-
-            <div class="block-slider">
-                <div class="phone-vertical"></div>
-                <div class="phone-horizontal"></div>
-                <div class="left"></div>
-                <div class="right"></div>
-            </div>
-
+            <!-- Slider-->
+            <section class="slider">
+                <div class="wrapper-slider">
+                  <div class="slider-container">
+                    <div class="slider-left-arrow">
+                      <img src="./assets/left.png" alt="arrow-left">
+                    </div>
+                    <div class="slider-black-screen-vertical"></div>
+                    <div class="slider-black-screen-horizontal"></div>
+                    <div class="slider-slides first">
+                      <div class="slider-iphone-vertical iphone-vertical">
+                        <div class="iphone-vertical-button"></div>
+                        <img src="./assets/phone-vertical.png" alt="iphone-vertical">
+                      </div>
+                      <div class="slider-iphone-horizontal iphone-horizontal">
+                        <div class="iphone-horizontal-button"></div>
+                        <img src="./assets/phone-horizontal.png" alt="iphone-horizontal">
+                      </div>
+                    </div>
+                    <div class="slider-slides second">
+                      <div class="slider-second-slide">
+                        <img src="./assets/slide-2.png" alt="slide2">
+                      </div>
+                    </div>
+                    <div class="slider-right-arrow">
+                      <img src="./assets/right.png" alt="arrow-right">
+                    </div>
+                  </div>
+                </div>
+            </section>
+            <!--Service-->
             <section class="service">
-                <h2 class="service-head">Our Services</h2>
+                <arcticle id=services><h2 class="service-head">Our Services</h2></arcticle>
                 <div class="content-singolo1"> Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum.
                      Duis mollis, non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
                      Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.
@@ -108,43 +134,37 @@
                 </div>
             </section>
         </div>
-
+            <!--Singolo 2-->
         <div class="container-singolo2">
             <header class="head-singolo2"> 
-                <div class="head-cont-singolo2"><h1 class="head-logo-singolo2"> Portfolio </h1>
+                <div class="head-cont-singolo2"><arcticle id=portfolio><h1 class="head-logo-singolo2"> Portfolio </h1></arcticle>
                 
                 <p class="text-singolo2">Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
                  
-                    <nav class="nav-singolo2">
-                    <ul> 
-                        <li>  <input type="button" class="b" href="#"  value="All">
-
-                        <li> <input type="button" class="b" href="#" value="Web Design"></li>
-                        <li> <input type="button" class="b" href="#"  value="Graphic Design"></li>
-
-                        <li> <input type="button" class="b" href="#" value="Artwork"></li>
-                    </ul>
-                </nav>
-
-            <div class="galery">
-               <div class="section g1"> <img src="./assets/img1.png"></div>
-               <div class="section g2"><img src="./assets/img2.png"></div>
-               <div class="section g3"> <img src="./assets/img3.png"></div>
-               <div class="section g4"> <img src="./assets/img4.png"></div>
-               <div class="section g5"> <img src="./assets/img5.png"></div>
-               <div class="section g6"> <img src="./assets/img6.png"></div>
-               <div class="section g7"> <img src="./assets/img7.png"></div>
-               <div class="section g8"> <img src="./assets/img8.png"></div>
-               <div class="section g9"> <img src="./assets/img9.png"></div>
-               <div class="section g10"> <img src="./assets/img10.png"></div>
-               <div class="section g11"> <img src="./assets/img11.png"></div>
-               <div class="section g12"> <img src="./assets/img12.png"></div>
-            </div>
+                <div class="portfolio-buttons">
+                    <div class="portfolio-button button-all button-active">All</div>
+                    <div class="portfolio-button button-web-design">Web Design</div>
+                    <div class="portfolio-button button-graphic-design">Graphic Design</div>
+                    <div class="portfolio-button button-artworks">Artwork</div>
+                </div>
+                <div class="portfolio-pics">
+                    <img src="assets/img1.png" alt="pic01" class="portfolio-pic">
+                    <img src="assets/img2.png" alt="pic02" class="portfolio-pic">
+                    <img src="assets/img3.png" alt="pic03" class="portfolio-pic">
+                    <img src="assets/img4.png" alt="pic04" class="portfolio-pic">
+                    <img src="assets/img5.png" alt="pic05" class="portfolio-pic">
+                    <img src="assets/img6.png" alt="pic06" class="portfolio-pic">
+                    <img src="assets/img7.png" alt="pic07" class="portfolio-pic">
+                    <img src="assets/img8.png" alt="pic08" class="portfolio-pic">
+                    <img src="assets/img9.png" alt="pic09" class="portfolio-pic">
+                    <img src="assets/img10.png" alt="pic10" class="portfolio-pic">
+                    <img src="assets/img11.png" alt="pic11" class="portfolio-pic">
+                    <img src="assets/img12.png" alt="pic12" class="portfolio-pic">
+                </div>
             </header>
         
-
             <section class="about">
-                <div class="about-head">About Us</div>
+                <arcticle id=about><div class="about-head">About Us</div></arcticle>
                 <p class="about-text">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum. Duis mollis, non commodo luctus, nisi erat porttitor
                     ligula, eget lacinia odio sem nec elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh. </p>
 
@@ -191,24 +211,43 @@
                 </div>
             </section>
         </div>  
-        
+        <!--Singolo 3-->
         <div class="container">
     
             <section class="quote"> 
                        
-                <h1 class="quote-content"> Get a Quote </h1>
+                <arcticle id=contact>  <h1 class="quote-content"> Get a Quote </h1> </arcticle>
                 <p class="quote-text">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum. Duis mollis, non commodo luctus, nisi erat porttitor
                     ligula, eget lacinia odio sem nec elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>  
                 
                 <div class="form">
-                    <form>
+                    <form action="#" method="post" class="quote-form">
                         <input type="text" placeholder="Name (Required)" name="name" required> <br><br>
                         <input type="email" placeholder="Email (Required)" name="email" required> <br><br>
                         <input type="text" placeholder="Subject" name="subject" required> <br><br>
                         <textarea placeholder="Describe your project in detail..." name="describe" ></textarea><br><br>
-                        <input type="submit" value="Send">
+                        <input type="submit" class="form-button" value="Send">
                     </form>
-    
+
+                    
+                    <div class="window window-none">
+                        <div class="window-content">
+                            <h4 class="m_window-title">
+                                Письмо отправлено
+                            </h4>
+                            <p class="window-subject">
+                                Без темы
+                            </p>
+                            <p class="window-describe">
+                                Без описания
+                            </p>
+                            <button class="window-submit-btn">Ok</button>
+                        </div>
+                    </div>
+
+
+
+
                     <div class="info">
                         <h3>Contact Information</h3>
                         <p>Quisque hendrerit purus dapibus, ornare nibh vitae, viver&shy;ra
@@ -229,11 +268,14 @@
                                   <a href="mailto:info@singolo.com">info@singolo.com</a>
                                 </li>
                               </ul>
-    
                     </div>
                 </div>
             </section> 
             
+            
+
+
+
             <footer class="footer">
                 <p class="footer-social">© Copyright 2013</p>
                 <ul class="social-networks">
@@ -245,5 +287,6 @@
             </footer>
     
             </div>
+            <script src='script.js'></script>
     </body>
 </html>
