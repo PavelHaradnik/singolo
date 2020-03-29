@@ -1,3 +1,4 @@
+
 //Menu
 
 const MENU = document.querySelectorAll('li.nav-head');
@@ -13,66 +14,186 @@ MENU.forEach(el => {
 
 //Slider
 
-const left_arrow = document.querySelector(".slider-left-arrow");
-const right_arrow = document.querySelector(".slider-right-arrow");
-let slides = document.getElementsByClassName("slider-slides");
-let slider = document.querySelector(".slider");
+var slideShow = (function () {
+    return function (selector, config) {
+      var
+        _slider = document.querySelector(selector), 
+        _sliderContainer = _slider.querySelector('.slider__items'), 
+        _sliderItems = _slider.querySelectorAll('.slider__item'), 
+        _sliderControls = _slider.querySelectorAll('.slider__control'), 
+        _currentPosition = 0, 
+        _transformValue = 0, 
+        _transformStep = 100, 
+        _itemsArray = [], 
+        _timerId,
+        _indicatorItems,
+        _indicatorIndex = 0,
+        _indicatorIndexMax = _sliderItems.length - 1,
+        _stepTouch = 50,
+        _config = {
+          isAutoplay: false, 
+          directionAutoplay: 'next', 
+          delayAutoplay: 5000, 
+          isPauseOnHover: true 
+        };
 
-let slideIndex = 1;
-showSlides(slideIndex);
+      
+      for (var key in config) {
+        if (key in _config) {
+          _config[key] = config[key];
+        }
+      }
 
-left_arrow.addEventListener('click', (e) => {
-  plusSlides(-1);
-});
+      
+      for (var i = 0, length = _sliderItems.length; i < length; i++) {
+        _itemsArray.push({ item: _sliderItems[i], position: i, transform: 0 });
+      }
 
-right_arrow.addEventListener('click', (e) => {
-  plusSlides(1);
-});
+      
+      var position = {
+        getItemIndex: function (mode) {
+          var index = 0;
+          for (var i = 0, length = _itemsArray.length; i < length; i++) {
+            if ((_itemsArray[i].position < _itemsArray[index].position && mode === 'min') || (_itemsArray[i].position > _itemsArray[index].position && mode === 'max')) {
+              index = i;
+            }
+          }
+          return index;
+        },
+        getItemPosition: function (mode) {
+          return _itemsArray[position.getItemIndex(mode)].position;
+        }
+      };
 
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-  blackScreenHorizontal.classList.remove('screen-on');
-  blackScreenVertical.classList.remove('screen-on');
-}
+      
+      var _move = function (direction) {
+        var nextItem, currentIndicator = _indicatorIndex;;
+        if (direction === 'next') {
+          _currentPosition++;
+          if (_currentPosition > position.getItemPosition('max')) {
+            nextItem = position.getItemIndex('min');
+            _itemsArray[nextItem].position = position.getItemPosition('max') + 1;
+            _itemsArray[nextItem].transform += _itemsArray.length * 100;
+            _itemsArray[nextItem].item.style.transform = 'translateX(' + _itemsArray[nextItem].transform + '%)';
+          }
+          _transformValue -= _transformStep;
+          _indicatorIndex = _indicatorIndex + 1;
+          if (_indicatorIndex > _indicatorIndexMax) {
+            _indicatorIndex = 0;
+          }
+        } else {
+          _currentPosition--;
+          if (_currentPosition < position.getItemPosition('min')) {
+            nextItem = position.getItemIndex('max');
+            _itemsArray[nextItem].position = position.getItemPosition('min') - 1;
+            _itemsArray[nextItem].transform -= _itemsArray.length * 100;
+            _itemsArray[nextItem].item.style.transform = 'translateX(' + _itemsArray[nextItem].transform + '%)';
+          }
+          _transformValue += _transformStep;
+          _indicatorIndex = _indicatorIndex - 1;
+          if (_indicatorIndex < 0) {
+            _indicatorIndex = _indicatorIndexMax;
+          }
+        }
+        _sliderContainer.style.transform = 'translateX(' + _transformValue + '%)';
+        
+       
+      };
 
-function showSlides(n) {
-    if (n > slides.length) {
-      slideIndex = 1;
+     
+      var _moveTo = function (index) {
+        var i = 0, direction = (index > _indicatorIndex) ? 'next' : 'prev';
+        while (index !== _indicatorIndex && i <= _indicatorIndexMax) {
+          _move(direction);
+          i++;
+        }
+      };
+
+      
+   
+      var _stopAutoplay = function () {
+        clearInterval(_timerId);
+      };
+
+     
+      var _addIndicators = function () {
+        var indicatorsContainer = document.createElement('ol');
+        indicatorsContainer.classList.add('slider__indicators');
+        for (var i = 0, length = _sliderItems.length; i < length; i++) {
+          var sliderIndicatorsItem = document.createElement('li');
+          if (i === 0) {
+            sliderIndicatorsItem.classList.add('active');
+          }
+          sliderIndicatorsItem.setAttribute("data-slide-to", i);
+          indicatorsContainer.appendChild(sliderIndicatorsItem);
+        }
+        _slider.appendChild(indicatorsContainer);
+        _indicatorItems = _slider.querySelectorAll('.slider__indicators > li')
+      };
+
+      var _isTouchDevice = function () {
+        return !!('ontouchstart' in window || navigator.maxTouchPoints);
+      };
+
+      
+      var _setUpListeners = function () {
+        var _startX = 0;
+        if (_isTouchDevice()) {
+          _slider.addEventListener('touchstart', function (e) {
+            _startX = e.changedTouches[0].clientX;
+            _startAutoplay();
+          });
+          _slider.addEventListener('touchend', function (e) {
+            var
+              _endX = e.changedTouches[0].clientX,
+              _deltaX = _endX - _startX;
+            if (_deltaX > _stepTouch) {
+              _move('prev');
+            } else if (_deltaX < -_stepTouch) {
+              _move('next');
+            }
+            _startAutoplay();
+          });
+        } else {
+          for (var i = 0, length = _sliderControls.length; i < length; i++) {
+            _sliderControls[i].classList.add('slider__control_show');
+          }
+        }
+        _slider.addEventListener('click', function (e) {
+          if (e.target.classList.contains('slider__control')) {
+            e.preventDefault();
+            _move(e.target.classList.contains('slider__control_next') ? 'next' : 'prev');
+            
+          } else if (e.target.getAttribute('data-slide-to')) {
+            e.preventDefault();
+            _moveTo(parseInt(e.target.getAttribute('data-slide-to')));
+            _startAutoplay();
+          }
+        });
+       
+      };
+    
+     
+      _setUpListeners();
+      
+
+      return {
+        next: function () {
+          _move('next');
+        },
+                 
+        left: function () {
+          _move('prev');
+        },
+        
+      }
     }
-    if (n < 1) {
-      slideIndex = slides.length;
-    }
-    for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    slides[slideIndex - 1].style.display = "";
-    if (slideIndex - 1 == 1){
-      slider.classList.add('blue');
-    }
-    else {
-      slider.classList.remove('blue');
-    }
-}
+  }());
 
-//Iphone's screen
-
-let verticalIphoneButton = document.querySelector('.iphone-vertical-button');
-let blackScreenVertical = document.querySelector('.slider-black-screen-vertical');
-
-verticalIphoneButton.addEventListener('click', (event) => {
-blackScreenVertical.classList.toggle('screen-on');
-});
-
-let horizontalIphoneButton = document.querySelector('.iphone-horizontal-button');
-let blackScreenHorizontal = document.querySelector('.slider-black-screen-horizontal');
-
-horizontalIphoneButton.addEventListener('click', (event) => {
-blackScreenHorizontal.classList.toggle('screen-on');
-})
-
-
-
-//Portfolio
+  slideShow('.slider', {
+    isAutoplay: true
+  });
+  //Portfolio
 const PORT_BTNS = document.querySelectorAll('div.portfolio-button');
 
 function rand_img () {
@@ -118,6 +239,26 @@ PORT_PICS.forEach(el => {
     event.target.classList.add('portfolio-pic-active');
   })
 });
+
+//Iphone's screen
+
+let verticalIphoneButton = document.querySelector('.iphone-vertical-button');
+let blackScreenVertical = document.querySelector('.slider-black-screen-vertical');
+
+verticalIphoneButton.addEventListener('click', (event) => {
+blackScreenVertical.classList.toggle('screen-on');
+});
+
+let horizontalIphoneButton = document.querySelector('.iphone-horizontal-button');
+let blackScreenHorizontal = document.querySelector('.slider-black-screen-horizontal');
+
+horizontalIphoneButton.addEventListener('click', (event) => {
+blackScreenHorizontal.classList.toggle('screen-on');
+})
+
+
+
+
 
 // Form
 
